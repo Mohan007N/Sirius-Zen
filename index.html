@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sirius Zen — Illuminate the future</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+  <meta name="description" content="Sirius Zen — futuristic tech studio. Mohana Krishnan, ML Developer & 2nd-year AI & DS student. Innovative AI & cloud solutions inspired by the stars.">
+  <style>
+    :root{
+      --bg-1:#05051a;
+      --bg-2:#071033;
+      --accent:#f9d71c;
+      --muted:rgba(255,255,255,0.75);
+      --glass: rgba(255,255,255,0.04);
+      --card: rgba(255,255,255,0.03);
+      --radius:14px;
+      --maxw:1200px;
+      --ease:cubic-bezier(.2,.9,.2,1);
+      --nav-height:72px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:#e8eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-y:scroll;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    /* Top navigation (fixed) */
+    .topnav{
+      position:fixed;left:0;right:0;top:0;height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;z-index:20;padding:12px 26px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .brand-left{display:flex;align-items:center;gap:14px}
+    .brand-left .logo{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#13213a,#081022);box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    .brand-left .brand-title{font-family:'Space Grotesk',Inter;font-weight:700;color:var(--accent);letter-spacing:0.5px}
+
+    nav.primary{display:flex;gap:18px;align-items:center}
+    nav.primary a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;transition:all .18s var(--ease)}
+    nav.primary a:hover{color:white;transform:translateY(-2px);background:rgba(255,255,255,0.02)}
+
+    .btn-app{padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#ffd24a);color:#08102a;font-weight:700;border:none;cursor:pointer;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+    .btn-app:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 18px 40px rgba(249,215,28,0.12)}
+
+    /* Canvas background */
+    #starfield{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
+    .nebula{position:fixed;inset:0;z-index:1;mix-blend-mode:screen;opacity:0.6;background: radial-gradient(600px 400px at 10% 20%, rgba(127,114,255,0.12), transparent 8%), radial-gradient(500px 300px at 80% 70%, rgba(18,226,255,0.06), transparent 12%);animation: nebulaShift 16s linear infinite}
+    @keyframes nebulaShift{0%{transform:translateY(0) translateX(0) scale(1)}50%{transform:translateY(-30px) translateX(20px) scale(1.02)}100%{transform:translateY(0) translateX(0) scale(1)}}
+
+    /* Parallax elements */
+    .parallax-element {
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+    }
+    
+    .planet-1 {
+      width: 180px;
+      height: 180px;
+      top: 15%;
+      left: 5%;
+      background: radial-gradient(circle at 30% 30%, rgba(57, 117, 255, 0.15), transparent 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 80px rgba(57, 117, 255, 0.2);
+    }
+    
+    .planet-2 {
+      width: 120px;
+      height: 120px;
+      bottom: 20%;
+      right: 10%;
+      background: radial-gradient(circle at 40% 40%, rgba(249, 215, 28, 0.1), transparent 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(249, 215, 28, 0.15);
+    }
+    
+    .asteroid {
+      width: 60px;
+      height: 60px;
+      top: 65%;
+      left: 15%;
+      background: radial-gradient(circle at 30% 30%, rgba(200, 200, 255, 0.1), transparent 70%);
+      border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%;
+      box-shadow: 0 0 40px rgba(200, 200, 255, 0.1);
+      animation: float 25s infinite alternate ease-in-out;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(30px, -40px) rotate(10deg); }
+    }
+
+    /* layout for sections */
+    .section{
+      min-height: 100vh;
+      padding: calc(var(--nav-height) + 40px) 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 3;
+      overflow: hidden;
+    }
+
+    /* Hero */
+    .hero{display:flex;align-items:center;justify-content:center}
+    .hero-inner{
+      max-width:var(--maxw);
+      width:100%;
+      text-align:center;
+      padding:56px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow:0 8px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transform: translateZ(20px);
+      position: relative;
+      z-index: 4;
+    }
+
+    header .brand{font-family:'Space Grotesk',Inter,system-ui;letter-spacing:0.5px;font-weight:600;font-size:18px;color:var(--accent)}
+    h1.title{font-size:64px;line-height:0.95;margin:12px 0;color:#ffffff}
+    p.lead{font-size:18px;color:var(--muted);max-width:880px;margin:0 auto}
+
+    .cta-row{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:12px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#ffcc2a);color:#08102a;box-shadow:0 6px 22px rgba(249,215,28,0.12)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .title .shine{position:relative;display:inline-block}
+    .title .shine:after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:6px;background:linear-gradient(90deg,var(--accent),rgba(249,215,28,0.2));filter:blur(12px);opacity:0.9;transform:scaleX(0);transform-origin:left center;transition:transform .9s var(--ease)}
+    .hero-inner:hover .title .shine:after{transform:scaleX(1)}
+
+    /* Sections */
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:28px;
+      max-width:900px;
+      margin:16px auto;
+      box-shadow:0 6px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transform-style: preserve-3d;
+      transform: translateZ(10px);
+    }
+    .card h2{color:var(--accent);margin-top:0}
+    .muted{color:var(--muted)}
+
+    /* profile */
+    .profile{display:flex;gap:20px;align-items:center;max-width:900px;margin:auto;flex-wrap:wrap}
+    .avatar{width:110px;height:110px;border-radius:18px;background:linear-gradient(135deg,#1a1a3a,#0b2b45);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:28px;box-shadow:0 8px 30px rgba(0,0,0,0.6);overflow:hidden}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block;border-radius:18px}
+    .profile .meta{flex:1;min-width:220px}
+    .meta h3{margin:0 0 6px 0}
+    .meta p{margin:0;color:var(--muted)}
+
+    /* Contact form */
+    form.contact-form{display:flex;flex-direction:column;gap:12px;max-width:640px;margin:auto}
+    form .row{display:flex;gap:12px}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:10px;color:inherit;font-size:15px}
+    textarea{min-height:140px;resize:vertical}
+
+    /* reveal animations */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+
+    footer{padding:24px;text-align:center;color:rgba(255,255,255,0.5);position:relative;z-index:3}
+
+    /* responsive */
+    @media (max-width:860px){
+      h1.title{font-size:42px}
+      .hero-inner{padding:28px}
+      .avatar{width:86px;height:86px;font-size:22px}
+      nav.primary{display:none}
+      .planet-1, .planet-2, .asteroid {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- starfield canvas -->
+  <canvas id="starfield"></canvas>
+  <div class="nebula" aria-hidden="true"></div>
+  
+  <!-- Parallax elements -->
+  <div class="parallax-element planet-1" data-depth="0.2"></div>
+  <div class="parallax-element planet-2" data-depth="0.3"></div>
+  <div class="parallax-element asteroid" data-depth="0.4"></div>
+
+  <!-- Top navigation -->
+  <div class="topnav">
+    <div class="brand-left">
+      <div class="logo" aria-hidden="true">
+        <!-- simple star logo SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#f9d71c"/><stop offset="1" stop-color="#ffd24a"/></linearGradient></defs>
+          <path d="M12 2l1.902 4.856L19 8.18l-4 3.094.944 5.4L12 14.9 8.056 16.674 9 11.274 5 8.18l5.098-1.324L12 2z" fill="url(#g)"/>
+        </svg>
+      </div>
+      <div class="brand-title">Sirius Zen</div>
+    </div>
+
+    <nav class="primary" role="navigation" aria-label="Primary Navigation">
+      <a href="#home" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">Home</a>
+      <a href="#about" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+      <a href="#contact" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
+      <button class="btn-app" onclick="tryAppsAnimation()">Try Our Apps</button>
+    </nav>
+  </div>
+
+  <!-- HERO (centered content on first page) -->
+  <section class="section hero" id="home">
+    <div class="hero-inner" role="banner">
+      <div class="brand">Sirius Zen</div>
+      <h1 class="title"><span class="shine">Sirius Zen</span></h1>
+      <p class="lead">Illuminating the future of technology — we build elegant machine learning systems, cloud-native platforms, and AI-powered products that redefine possibility.</p>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Learn more</button>
+      </div>
+
+      <p style="margin-top:18px;color:var(--muted)">Swipe down to explore — designed & developed by <strong>Mohana Krishnan</strong>, ML Developer & 2nd-year AI & DS student</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="card reveal">
+      <h2>About Sirius Zen</h2>
+      <p class="muted">Sirius Zen is a futuristic technology studio crafting intelligent software and ML-driven solutions. We marry astrophysical inspiration with practical machine learning to create products that are beautiful, reliable, and scalable.</p>
+    </div>
+  </section>
+
+  <!-- VISION -->
+  <section class="section" id="vision">
+    <div class="card reveal">
+      <h2>Vision</h2>
+      <p class="muted">To lead a new generation of technology companies that use machine intelligence to expand human capabilities and make complex systems intuitive and accessible.</p>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="section" id="mission">
+    <div class="card reveal">
+      <h2>Mission</h2>
+      <p class="muted">Design and deploy responsible AI and ML systems, deliver cloud-first architectures, and partner with organizations to transform data into meaningful outcomes.</p>
+    </div>
+  </section>
+
+  <!-- PROFILE (About you) -->
+  <section class="section" id="profile">
+    <div class="card reveal">
+      <h2>Meet the Founder</h2>
+      <div class="profile">
+        <!-- Replace the original MK avatar with your cropped image. -->
+        <div class="avatar">
+          <!-- local file produced: /mnt/data/dd25f08b-023e-4526-b104-3bf5fba948a2.jpg (circular PNG with transparency) -->
+          <img src="/mnt/data/founder_avatar.png" alt="Mohana Krishnan">
+        </div>
+        <div class="meta">
+          <h3>Mohana Krishnan</h3>
+          <p class="muted">ML Developer & 2nd-year AI & DS student — I specialize in machine learning, model development, and deploying scalable AI systems. I build end-to-end ML pipelines, production-ready models, and data-driven products aligned with business value.</p>
+          <p class="muted" style="margin-top:10px"><strong>Skills:</strong> Python, TensorFlow / PyTorch, Scikit-learn, Docker, Kubernetes, Cloud (AWS/GCP), Data Engineering, MLOps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="card reveal">
+      <h2>Contact</h2>
+      <p class="muted">Have a project, collaboration or question? Send a message or email directly.</p>
+
+      <form class="contact-form" id="contactForm">
+        <div class="row">
+          <input type="text" id="name" placeholder="Your name" required>
+          <input type="email" id="email" placeholder="Your email" required>
+        </div>
+        <textarea id="message" placeholder="Your message" required></textarea>
+        <div style="display:flex;gap:12px;align-items:center;justify-content:center;margin-top:6px">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <button type="button" class="btn btn-ghost" onclick="copyEmail()">Copy Email</button>
+        </div>
+        <p class="muted" style="text-align:center;margin-top:10px">Or email directly: <a href="mailto:mohankrishnan4099@gmail.com" style="color:var(--accent)">mohankrishnan4099@gmail.com</a></p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    &copy; <span id="year"></span> Sirius Zen — Mohana Krishnan. Built with ❤
+  </footer>
+
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* Starfield canvas animation - lightweight particle system */
+    (function(){
+      const canvas = document.getElementById('starfield');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      const STAR_COUNT = Math.floor((w*h)/9000);
+
+      function rand(min,max){return Math.random()*(max-min)+min}
+
+      function init(){
+        stars = [];
+        for(let i=0;i<STAR_COUNT;i++){
+          stars.push({x:rand(0,w), y:rand(0,h), r:rand(0.4,1.6), vx:rand(-0.02,0.02), vy:rand(0.02,0.15), twinkle:Math.random()*Math.PI*2});
+        }
+      }
+
+      function resize(){w = canvas.width = innerWidth; h = canvas.height = innerHeight; init();}
+      addEventListener('resize', () => { resize(); });
+
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+        // faint vignette
+        const g = ctx.createLinearGradient(0,0,0,h);
+        g.addColorStop(0,'rgba(10,10,30,0.1)');
+        g.addColorStop(1,'rgba(0,0,0,0.2)');
+        ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+
+        for(let s of stars){
+          s.x += s.vx; s.y += s.vy; s.twinkle += 0.05;
+          if(s.y > h+20){s.y = -10; s.x = rand(0,w)}
+          if(s.x < -20) s.x = w+10; if(s.x > w+20) s.x = -10;
+          const alpha = 0.4 + 0.6*Math.sin(s.twinkle);
+          ctx.beginPath(); ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+        }
+      }
+
+      init();
+      function loop(){ draw(); requestAnimationFrame(loop);} loop();
+    })();
+
+    // Enhanced parallax scrolling effect
+    (function() {
+      const parallaxElements = document.querySelectorAll('.parallax-element');
+      
+      // Calculate movement based on scroll position and element depth
+      function updateParallax() {
+        const scrollTop = window.pageYOffset;
+        
+        parallaxElements.forEach(element => {
+          const depth = parseFloat(element.getAttribute('data-depth'));
+          const movement = -(scrollTop * depth);
+          const translate = `translate3d(0, ${movement}px, 0)`;
+          element.style.transform = translate;
+        });
+      }
+      
+      // Throttle scroll events for performance
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            updateParallax();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+      
+      // Initialize parallax on load
+      window.addEventListener('load', updateParallax);
+    })();
+
+    // IntersectionObserver for reveal on scroll
+    (function(){
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){ entry.target.classList.add('visible'); }
+        });
+      },{threshold:0.12});
+
+      document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    })();
+
+    // contact form: send to backend API
+    document.getElementById('contactForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      const btn = this.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+
+      // Simulate successful submission
+      setTimeout(() => {
+        alert('✅ Message sent successfully! (Demo mode)');
+        this.reset();
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }, 1000);
+   });
+
+
+    // Try Our Apps playful animation
+    function tryAppsAnimation(){
+      const btn = document.querySelector('.btn-app');
+      btn.animate([
+        {transform: 'translateY(0) scale(1)'},
+        {transform: 'translateY(-6px) scale(1.03)'},
+        {transform: 'translateY(0) scale(1)'}
+      ],{duration:520,easing:'cubic-bezier(.2,.9,.2,1)'});
+      // example behavior: open new tab to apps (placeholder)
+      setTimeout(()=>{
+        window.open('https://example.com/apps','_blank');
+      },220);
+    }
+
+    // small accessibility: allow arrow down to scroll to next section
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowDown'){
+        const sections = Array.from(document.querySelectorAll('.section'));
+        const index = sections.findIndex(s => s.getBoundingClientRect().top >= 10);
+        if(index >= 0 && index < sections.length-1) sections[index+1].scrollIntoView({behavior:'smooth'});
+      }
+    });
+  </script>
+</body>
+</html>
